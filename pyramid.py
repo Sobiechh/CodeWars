@@ -1,14 +1,30 @@
 import codewars_test as test
 
 def longest_slide_down(pyramid):
-    
-    pass
+    sumy = [[0 for j in range(len(pyramid[i]))] for i in range(len(pyramid))]
+    sumy[0][0] = pyramid[0][0]
+    for os_y, L in enumerate(pyramid, 0):
+        for os_x in range(os_y+1):
+            if not os_x:
+                sumy[os_y][os_x] = max(sumy[os_y][os_x], sumy[os_y-1][os_x] + L[os_x])
+            elif os_x < os_y:
+                sumy[os_y][os_x] = max(sumy[os_y][os_x], sumy[os_y-1][os_x] + L[os_x], sumy[os_y-1][os_x-1] + L[os_x])
+            else:
+                sumy[os_y][os_x] = max(sumy[os_y][os_x], sumy[os_y-1][os_x-1] + L[os_x])
+    return max(sumy[-1])
+
+
 
 @test.describe('longest_slide_down')
 def test_longest_slide_down():
     @test.it('should work for small pyramids')
     def small_pyramids():
-        test.assert_equals(longest_slide_down([[3], [7, 4], [2, 4, 6], [8, 5, 9, 3]]), 23)
+        test.assert_equals(longest_slide_down( [
+        [3], 
+        [7, 4], 
+        [2, 4, 6], 
+        [8, 5, 9, 3]
+        ]), 23)
     @test.it('should work for medium pyramids')
     def medium_pyramids():
         test.assert_equals(longest_slide_down([
