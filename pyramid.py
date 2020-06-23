@@ -14,7 +14,6 @@ def longest_slide_down(pyramid):
     return max(sumy[-1])
 
 
-
 @test.describe('longest_slide_down')
 def test_longest_slide_down():
     @test.it('should work for small pyramids')
